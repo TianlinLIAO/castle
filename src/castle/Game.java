@@ -1,17 +1,12 @@
 package castle;
 
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Game {
 	private Room currentRoom;
-	private HashMap<String, Handler> handlers = new HashMap<String, Handler>();
-
+	
 	public Game() 
     {
-    	handlers.put("go", new HandlerGo(this));
-		handlers.put("bye", new HandlerBye(this));
-		handlers.put("help", new HandlerHelp(this));
         createRooms();
     }
 
@@ -49,7 +44,7 @@ public class Game {
 
 	// 以下为用户命令
 
-	public void goRoom(String direction) {
+	private void goRoom(String direction) {
 		Room nextRoom = currentRoom.getExit(direction);
 
 		if (nextRoom == null) {
@@ -72,15 +67,31 @@ public class Game {
 		while (true) {
 			String line = in.nextLine();
 			String[] words = line.split(" ");
-			Handler handler=handlers.get(words[0]);
+			Handler handler=null;
 			String value="";
-			if(words.length>1)
-				value=words[1];
-			if(handler!=null){
-				handler.doCmd(value);
-				if(handler.isBye())
-					break;
+			if(words[0].equals("help")){
+				handler=new Handler() {
+					@Override
+					public void doCmd(String word) {
+						System.out.println("迷路了吗？你可以做的命令有：go bye help");
+						System.out.println("如：\tgo east");
+					}
+				};
 			}
+			if(words[0].equals("bye")){
+				break;
+			}
+			if(words[0].equals("go")){
+				if(words.length>1) 
+					value=words[1];
+				handler=new Handler() {
+					@Override
+					public void doCmd(String word) {
+						goRoom(word);
+					}
+				};
+			}
+			handler.doCmd(value);
 		}
 		in.close();
 	}
