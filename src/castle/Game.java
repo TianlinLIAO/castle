@@ -78,10 +78,10 @@ public class Game {
 					}
 				};
 			}
-			if(words[0].equals("bye")){
+			else if(words[0].equals("bye")){
 				break;
 			}
-			if(words[0].equals("go")){
+			else if(words[0].equals("go")){
 				if(words.length>1) 
 					value=words[1];
 				handler=new Handler() {
@@ -90,6 +90,10 @@ public class Game {
 						goRoom(word);
 					}
 				};
+			}
+			else {
+				System.out.println("非法输入！请再试一次。");
+				continue;
 			}
 			handler.doCmd(value);
 		}
