@@ -22,12 +22,15 @@ public class Game {
         bedroom = new Room("卧室");
         
         //	初始化房间的出口
-        outside.setExits(null, lobby, study, pub);
-        lobby.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        study.setExits(outside, bedroom, null, null);
-        bedroom.setExits(null, null, null, study);
-
+        outside.setExits("east", lobby);
+        outside.setExits("south", study);
+        outside.setExits("west", pub);
+        lobby.setExits("west", outside);
+        pub.setExits("east", outside);
+        study.setExits("north", outside);
+        study.setExits("east", bedroom);
+        bedroom.setExits("west", study);
+       
         currentRoom = outside;  //	从城堡门外开始
     }
 
