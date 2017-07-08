@@ -2,10 +2,10 @@ package castle;
 
 public class Room {
     public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
+    private Room northExit;
+    private Room southExit;
+    private Room eastExit;
+    private Room westExit;
 
     public Room(String description) 
     {
@@ -28,5 +28,39 @@ public class Room {
     public String toString()
     {
         return description;
+    }
+    
+    public String getExitDesc(){
+    	StringBuffer buffer=new StringBuffer();
+    	if(northExit!=null){
+    		buffer.append("north ");
+    	}
+    	if(eastExit!=null){
+    		buffer.append("east ");
+    	}
+    	if(westExit!=null){
+    		buffer.append("west ");
+    	}
+    	if(southExit!=null){
+    		buffer.append("south ");
+    	}
+    	return buffer.toString();
+    }
+    
+    public Room getExit(String direction){
+    	Room nextRoom=null;
+    	if(direction.equals("north")) {
+            nextRoom = northExit;
+        }
+        if(direction.equals("east")) {
+            nextRoom = eastExit;
+        }
+        if(direction.equals("south")) {
+            nextRoom = southExit;
+        }
+        if(direction.equals("west")) {
+            nextRoom = westExit;
+        }
+    	return nextRoom;
     }
 }
