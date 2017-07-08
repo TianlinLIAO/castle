@@ -13,14 +13,14 @@ public class Game {
 	private void createRooms() {
 		Room outside, lobby, pub, study, bedroom;
 
-		// 制造房间
-		outside = new Room("城堡外");
-		lobby = new Room("大堂");
-		pub = new Room("小酒吧");
-		study = new Room("书房");
-		bedroom = new Room("卧室");
+		// Create new rooms
+		outside = new Room("Outside");
+		lobby = new Room("Lobby");
+		pub = new Room("Pub");
+		study = new Room("Study");
+		bedroom = new Room("Bedroom");
 
-		// 初始化房间的出口
+		// Initiate the exits
 		outside.setExits("east", lobby);
 		outside.setExits("south", study);
 		outside.setExits("west", pub);
@@ -30,25 +30,25 @@ public class Game {
 		study.setExits("east", bedroom);
 		bedroom.setExits("west", study);
 
-		currentRoom = outside; // 从城堡门外开始
+		currentRoom = outside; // Game starts from outside of castle
 	}
 
 	private void printWelcome() {
 		System.out.println();
-		System.out.println("欢迎来到城堡！");
-		System.out.println("这是一个超级无聊的游戏。");
-		System.out.println("如果需要帮助，请输入 'help' 。");
+		System.out.println("Welcome to the castle！");
+		System.out.println("This is a super boring game.");
+		System.out.println("If you need help, please input 'help'.");
 		System.out.println();
 		showPrompt();
 	}
 
-	// 以下为用户命令
+	// Below are user commands
 
 	private void goRoom(String direction) {
 		Room nextRoom = currentRoom.getExit(direction);
 
 		if (nextRoom == null) {
-			System.out.println("那里没有门！");
+			System.out.println("There's no exist!");
 		} else {
 			currentRoom = nextRoom;
 			showPrompt();
@@ -56,8 +56,8 @@ public class Game {
 	}
 
 	public void showPrompt() {
-		System.out.println("现在你在" + currentRoom);
-		System.out.print("出口有：");
+		System.out.println("Now you are at the " + currentRoom);
+		System.out.print("Exists are：");
 		System.out.print(currentRoom.getExitDesc());
 		System.out.println();
 	}
@@ -73,8 +73,8 @@ public class Game {
 				handler=new Handler() {
 					@Override
 					public void doCmd(String word) {
-						System.out.println("迷路了吗？你可以做的命令有：go bye help");
-						System.out.println("如：\tgo east");
+						System.out.println("You got lost? You could use these commands：go bye help");
+						System.out.println("For example：\tgo east");
 					}
 				};
 			}
@@ -92,7 +92,7 @@ public class Game {
 				};
 			}
 			else {
-				System.out.println("非法输入！请再试一次。");
+				System.out.println("Invalid input! Please try again.");
 				continue;
 			}
 			handler.doCmd(value);
@@ -104,7 +104,7 @@ public class Game {
 		Game game = new Game();
 		game.printWelcome();
 		game.play();
-		System.out.println("感谢您的光临。再见！");
+		System.out.println("Thank you! Bye bye!");
 	}
 
 }
