@@ -14,7 +14,7 @@ public class Room {
     public void setExits(String dir,Room room) {
     	exits.put(dir, room);
     }
-    
+
     @Override
     public String toString()
     {
