@@ -9,9 +9,41 @@ public class Game {
 
 	public Game() 
     {
-    	handlers.put("go", new HandlerGo(this));
-		handlers.put("bye", new HandlerBye(this));
-		handlers.put("help", new HandlerHelp(this));
+    	handlers.put("go", new Handler() {
+			
+			@Override
+			public void doCmd(String word) {
+				goRoom(word);
+			}
+
+			@Override
+			public boolean isBye() {
+				return false;
+			}
+		});
+		handlers.put("bye", new Handler() {
+			
+			@Override
+			public void doCmd(String word) {}
+
+			@Override
+			public boolean isBye() {
+				return true;
+			}
+		});
+		handlers.put("help", new Handler() {
+			
+			@Override
+			public boolean isBye() {
+				return false;
+			}
+			
+			@Override
+			public void doCmd(String word) {
+				System.out.println("迷路了吗？你可以做的命令有：go bye help");
+				System.out.println("如：\tgo east");
+			}
+		});
         createRooms();
     }
 
@@ -49,7 +81,7 @@ public class Game {
 
 	// 以下为用户命令
 
-	public void goRoom(String direction) {
+	private void goRoom(String direction) {
 		Room nextRoom = currentRoom.getExit(direction);
 
 		if (nextRoom == null) {
